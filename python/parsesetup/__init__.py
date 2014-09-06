@@ -37,9 +37,11 @@ def main():
             try:
                 models.Venue.Query.get(name=name)
                 print '{} already exists'.format(name)
+                return None
             except query.QueryResourceDoesNotExist:
                 venue = models.Venue.build(name=name, category=category, pop=pop, geotag=geotag, addr=str(addr))
                 venue.save()
+                return venue
 
 
-main()
+# main()

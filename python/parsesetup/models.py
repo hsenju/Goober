@@ -1,5 +1,6 @@
 from __future__ import division
 
+
 from parse_rest.datatypes import Object
 
 # class GeoPoint(Object):
@@ -11,8 +12,9 @@ from parse_rest.datatypes import Object
 
 
 class Venue(Object):
-    DEFAULT_DECAY = .5
+    DEFAULT_DECAY = 4
     POPULARITY_CUTOFF = 10
+    MAX_POP = 500
 
     @staticmethod
     def build(name, category, pop, geotag, addr):
@@ -44,9 +46,11 @@ class Venue(Object):
         if factor > 0:
             self.pop *= (1 + factor)
         else:
-            self.pop /= (1 + factor)
+            self.pop /= (1 + abs(factor))
+
+        self.pop = min(self.pop, 500)
 
     def decay(self):
-        self.update_popularity((-1 if self.popularity <
+        self.update_popularity((-1 if self.pop <
                                 self.POPULARITY_CUTOFF else 1) *
                                 self.DEFAULT_DECAY)
