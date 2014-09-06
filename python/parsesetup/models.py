@@ -15,6 +15,8 @@ class Venue(Object):
     DEFAULT_DECAY = 4
     POPULARITY_CUTOFF = 10
     MAX_POP = 500
+    BLACK_LIST = ["Police Station", "Medical", "Hospital", "Conference room", "Dentist's Office", "Pharmacy", "Farm",
+                  "Hardware", "Bank"]
 
     @staticmethod
     def build(name, category, pop, geotag, addr):
