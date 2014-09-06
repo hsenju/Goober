@@ -1,6 +1,5 @@
 import tweetanalysis.analyzer
 import foursquare
-import json
 import models
 import parsesetup_cfg
 from parse_rest.connection import register

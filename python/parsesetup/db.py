@@ -4,7 +4,9 @@ from parse_rest import query
 
 import tweetanalysis.analyzer
 
+
 class Parse:
+
     def find_nearest(self, weighted_tweet):
         res = Venue.Query.filter(location__nearSphere=
                                   GeoPoint(

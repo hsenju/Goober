@@ -6,6 +6,7 @@ from parsesetup.db import Parse
 from parsesetup.fsclient import FSClient, VenueNotFoundError
 from time import sleep
 
+
 def run():
     decay_timer = Timer()
     tweet_builder = analyzer.WeightedTweetBuilder(scraper.Scraper())
