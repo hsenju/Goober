@@ -1,13 +1,32 @@
+from __future__ import division
+from parse_rest.datatypes import GeoPoint
+
 import textblob
 import collections
 
 from scraper import Scraper
 
-GeoTag = collections.namedtuple("Geotag", ['lat', 'long'])
+GeoTag = collections.namedtuple("GeoTag", ['lat', 'long'])
+
+def coords_to_geotag(coords):
+    print "finding center of coords: {}".format(coords)
+    inner = coords[0]
+    lat = 0
+    lng = 0
+
+    for new_lat, new_lng in inner:
+        lat += new_lat
+        lng += new_lng
+
+    num_coords = len(inner)
+
+    return GeoTag(lat/num_coords, lng/num_coords)
 
 class WeightedTweet(object):
     def __init__(self, tweet):
-        self.geotag = GeoTag(*tweet['geo']['coordinates'])
+        print "Building for tweet: {}".format(tweet)
+        self.geotag = coords_to_geotag(
+                tweet['place']['bounding_box']['coordinates'])
         self.weight = textblob.TextBlob(tweet['text']).sentiment.polarity
 
 class WeightedTweetBuilder(object):

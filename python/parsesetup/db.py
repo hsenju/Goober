@@ -1,12 +1,13 @@
 from parsesetup.models import Venue
+from parse_rest.datatypes import GeoPoint
 
 class Parse:
-    # def add(self, venue):
-    #     venue.save()
-
     def find_nearest(self, weighted_tweet):
-        return Venue.Query.filter(location__nearSphere=weighted_tweet.geotag,
-                                  limit=1)[0]
+        res = Venue.Query.filter(location__nearSphere=
+                                  GeoPoint(*weighted_tweet.geotag),
+                                  limit=1)
+        print "Got venues: {}".format(res)
+        return res[0]
 
     def update_for_tweet(self, weighted_tweet):
         venue = self.find_nearest(weighted_tweet)

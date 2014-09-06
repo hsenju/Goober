@@ -21,7 +21,7 @@ import twitter_cfg
 class Scraper(object):
     LOCATION = "-74,40,-73,41"
     # BUMP THIS UP LATER
-    PER_CHUNK = 10
+    PER_CHUNK = 1
 
     def __init__(self):
         self.stream = twitter.TwitterStream(auth=twitter.OAuth(
