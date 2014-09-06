@@ -1,0 +1,8 @@
+argparse==1.2.1
+certifi==14.05.14
+oauthlib==0.6.3
+python-twitter==2.0
+requests==2.4.0
+requests-oauthlib==0.4.1
+simplejson==3.6.3
+wsgiref==0.1.2
