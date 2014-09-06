@@ -3,7 +3,7 @@ import collections
 
 from scraper import Scraper
 
-WeightedTweet = collections.namedtuple("WeightedTweet",
-                                       ['geotag', 'weight'])
-
-class Analyzer(object):
+class WeightedTweet(object):
+    def __init__(self, tweet):
+        self.geotag = tweet['geo']['coordinates']
+        self.weight = textblob.TextBlob(tweet['text']).sentiment
