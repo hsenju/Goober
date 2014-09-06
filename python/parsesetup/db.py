@@ -4,8 +4,7 @@ from parse_rest.datatypes import GeoPoint
 class Parse:
     def find_nearest(self, weighted_tweet):
         res = Venue.Query.filter(location__nearSphere=
-                                  GeoPoint(*weighted_tweet.geotag),
-                                  limit=1)
+                                  GeoPoint(*weighted_tweet.geotag))
         print "Got venues: {}".format(res)
         return res[0]
 

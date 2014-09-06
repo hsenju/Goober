@@ -1,3 +1,5 @@
+from __future__ import division
+
 from parse_rest.datatypes import Object
 
 # class GeoPoint(Object):
@@ -20,6 +22,8 @@ class Venue(Object):
             'longitude': geotag.long
         }
 
+        print "built location: {}".format(location)
+
         return Venue(name=name,
                      category=category,
                      location=location,
@@ -32,10 +36,15 @@ class Venue(Object):
                                 weighted_tweet.geotag)
 
     def update_popularity(self, factor):
+        print "Updating for factor: {}".format(factor)
+
+        if not factor:
+            return
+
         if factor > 0:
-            self.popularity *= (1 + factor)
+            self.pop *= (1 + factor)
         else:
-            self.popularity /= (1 + factor)
+            self.pop /= (1 + factor)
 
     def decay(self):
         self.update_popularity((-1 if self.popularity <

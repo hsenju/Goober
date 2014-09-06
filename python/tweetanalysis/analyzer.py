@@ -14,11 +14,14 @@ def coords_to_geotag(coords):
     lat = 0
     lng = 0
 
-    for new_lat, new_lng in inner:
+    for new_lng, new_lat in inner:
         lat += new_lat
         lng += new_lng
 
     num_coords = len(inner)
+
+    print "Got center lat: {}, lng: {}".format(
+        lat/num_coords, lng/num_coords)
 
     return GeoTag(lat/num_coords, lng/num_coords)
 
