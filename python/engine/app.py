@@ -1,3 +1,5 @@
+import twitter
+
 from engine.timer import Timer
 from tweetanalysis import scraper, analyzer
 from parsesetup.db import Parse
@@ -9,7 +11,11 @@ def run():
 
     while True:
         while not decay_timer.is_done():
-            weighted_tweets = tweet_builder.new_tweets()
+            try:
+                weighted_tweets = tweet_builder.new_tweets()
+            except twitter.TwitterHTTPError:
+                sleep(10)
+                continue
 
             print "Got tweets."
 
