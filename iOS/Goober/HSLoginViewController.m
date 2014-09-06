@@ -76,7 +76,7 @@
 }
 
 -(void) processLoginWithAccessToken: (NSString*)accessToken expiryDate:(NSDate*)expiryDate {
-    
+    [self performSegueWithIdentifier:@"SBPushIdentifier" sender:self];
 }
 
 

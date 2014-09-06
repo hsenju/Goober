@@ -30,8 +30,6 @@
        didFailWithError:(NSError *)error;
 
 - (void)queryForAllVenuesNearLocation:(CLLocation *)currentLocation withNearbyDistance:(CLLocationAccuracy)nearbyDistance;
-- (void)updateVenuesForLocation:(CLLocation *)location withNearbyDistance:(CLLocationAccuracy) filterDistance;
-- (void)distanceFilterDidChange:(NSNotification *)note;
 - (void)locationDidChange:(NSNotification *)note;
 @end
 
@@ -69,13 +67,40 @@
     [super viewDidLoad];
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     
-    self.mapView.region = MKCoordinateRegionMake(CLLocationCoordinate2DMake(37.332495f, -122.029095f), MKCoordinateSpanMake(0.008516f, 0.021801f));
-	self.mapPannedSinceLocationUpdate = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationDidChange:) name:kHSLocationChangeNotification object:nil];
+    
+    //self.mapView.region = MKCoordinateRegionMake(CLLocationCoordinate2DMake(37.332495f, -122.029095f), MKCoordinateSpanMake(0.008516f, 0.021801f));
+	//self.mapPannedSinceLocationUpdate = NO;
+    
+    HSAppDelegate *appDelegate = (HSAppDelegate *)[[UIApplication sharedApplication] delegate];
+    [self queryForAllVenuesNearLocation:appDelegate.currentLocation withNearbyDistance:appDelegate.filterDistance];
+    
+    [mapView setShowsUserLocation:YES];
+    
 	[self startStandardUpdates];
     // Do any additional setup after loading the view.
 }
 
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    
+    HSAppDelegate *appDelegate = (HSAppDelegate *)[[UIApplication sharedApplication] delegate];
+    //MKCoordinateRegion newRegion = MKCoordinateRegionMakeWithDistance(appDelegate.currentLocation.coordinate, appDelegate.filterDistance * 2, appDelegate.filterDistance * 2);
+    [self queryForAllVenuesNearLocation:appDelegate.currentLocation withNearbyDistance:appDelegate.filterDistance];
+    
+    //[self.mapView setRegion:newRegion animated:YES];
+    self.mapPannedSinceLocationUpdate = NO;
+}
+
+
 - (void)viewWillAppear:(BOOL)animated {
+    HSAppDelegate *appDelegate = (HSAppDelegate *)[[UIApplication sharedApplication] delegate];
+    MKCoordinateRegion newRegion = MKCoordinateRegionMakeWithDistance(appDelegate.currentLocation.coordinate, appDelegate.filterDistance * 2, appDelegate.filterDistance * 2);
+    [self queryForAllVenuesNearLocation:appDelegate.currentLocation withNearbyDistance:appDelegate.filterDistance];
+    
+    [self.mapView setRegion:newRegion animated:YES];
+    self.mapPannedSinceLocationUpdate = NO;
+
 	[locationManager startUpdatingLocation];
 	[super viewWillAppear:animated];
 }
@@ -92,7 +117,7 @@
 
 - (void)dealloc {
 	[locationManager stopUpdatingLocation];
-	
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:kHSLocationChangeNotification object:nil];
 	self.mapPinsPlaced = NO; // reset this for the next time we show the map.
 }
 
@@ -111,9 +136,9 @@
 
     
 	// Update the map with new pins:
-	[self queryForAllVenuesNearLocation:appDelegate.currentLocation withNearbyDistance:appDelegate.filterDistance];
+	//[self queryForAllVenuesNearLocation:appDelegate.currentLocation withNearbyDistance:appDelegate.filterDistance];
 	// And update the existing pins to reflect any changes in filter distance:
-	[self updateVenuesForLocation:appDelegate.currentLocation withNearbyDistance:appDelegate.filterDistance];
+    
 }
 
 
@@ -139,60 +164,22 @@
 	}
 }
 
-- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
-	NSLog(@"%s", __PRETTY_FUNCTION__);
-	switch (status) {
-		case kCLAuthorizationStatusAuthorized:
-			NSLog(@"kCLAuthorizationStatusAuthorized");
-			// Re-enable the post button if it was disabled before.
-			self.navigationItem.rightBarButtonItem.enabled = YES;
-			[locationManager startUpdatingLocation];
-			break;
-		case kCLAuthorizationStatusDenied:
-			NSLog(@"kCLAuthorizationStatusDenied");
-        {{
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Anywall can’t access your current location.\n\nTo view nearby posts or create a post at your current location, turn on access for Anywall to your location in the Settings app under Location Services." message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
-            [alertView show];
-            // Disable the post button.
-            self.navigationItem.rightBarButtonItem.enabled = NO;
-        }}
-			break;
-		case kCLAuthorizationStatusNotDetermined:
-			NSLog(@"kCLAuthorizationStatusNotDetermined");
-			break;
-		case kCLAuthorizationStatusRestricted:
-			NSLog(@"kCLAuthorizationStatusRestricted");
-			break;
-	}
-}
-
 - (void)locationManager:(CLLocationManager *)manager
     didUpdateToLocation:(CLLocation *)newLocation
            fromLocation:(CLLocation *)oldLocation {
-	NSLog(@"%s", __PRETTY_FUNCTION__);
     
 	HSAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
 	appDelegate.currentLocation = newLocation;
+    [self queryForAllVenuesNearLocation:appDelegate.currentLocation withNearbyDistance:appDelegate.filterDistance];
 }
 
-- (void)locationManager:(CLLocationManager *)manager
-       didFailWithError:(NSError *)error {
-	NSLog(@"%s", __PRETTY_FUNCTION__);
-	NSLog(@"Error: %@", [error description]);
+- (void) startShowingUserHeading:(id)sender{
+    HSAppDelegate *appDelegate = (HSAppDelegate *)[[UIApplication sharedApplication] delegate];
+    MKCoordinateRegion newRegion = MKCoordinateRegionMakeWithDistance(appDelegate.currentLocation.coordinate, appDelegate.filterDistance * 2, appDelegate.filterDistance * 2);
+    [self queryForAllVenuesNearLocation:appDelegate.currentLocation withNearbyDistance:appDelegate.filterDistance];
     
-	if (error.code == kCLErrorDenied) {
-		[locationManager stopUpdatingLocation];
-	} else if (error.code == kCLErrorLocationUnknown) {
-		// todo: retry?
-		// set a timer for five seconds to cycle location, and if it fails again, bail and tell the user.
-	} else {
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error retrieving location"
-		                                                message:[error description]
-		                                               delegate:nil
-		                                      cancelButtonTitle:nil
-		                                      otherButtonTitles:@"Ok", nil];
-		[alert show];
-	}
+    [self.mapView setRegion:newRegion animated:YES];
+    self.mapPannedSinceLocationUpdate = NO;
 }
 
 #pragma mark - MKMapViewDelegate methods
@@ -237,11 +224,8 @@
 #pragma mark - Fetch map pins
 
 - (void)queryForAllVenuesNearLocation:(CLLocation *)currentLocation withNearbyDistance:(CLLocationAccuracy)nearbyDistance {
-	PFQuery *query = [PFQuery queryWithClassName:self.className];
+	PFQuery *query = [PFQuery queryWithClassName:@"Venue"];
     
-	if (currentLocation == nil) {
-		NSLog(@"%s got a nil location!", __PRETTY_FUNCTION__);
-	}
     
 	// If no objects are loaded in memory, we look to the cache first to fill the table
 	// and then subsequently do a query against the network.
@@ -252,8 +236,7 @@
 	// Query for posts sort of kind of near our current location.
 	PFGeoPoint *point = [PFGeoPoint geoPointWithLatitude:currentLocation.coordinate.latitude longitude:currentLocation.coordinate.longitude];
 	[query whereKey:kHSParseLocationKey nearGeoPoint:point withinKilometers:kHSMaximumSearchDistance];
-	[query includeKey:kHSParseUserKey];
-	query.limit = kHSSearch;
+	query.limit = 5;//kHSSearch;
     
 	[query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
 		if (error) {

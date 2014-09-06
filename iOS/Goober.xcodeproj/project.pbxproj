@@ -30,6 +30,7 @@
 		2F8494D419BB0627001347C9 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F8494D319BB0627001347C9 /* MapKit.framework */; };
 		2F8494D719BB0F1E001347C9 /* HSTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F8494D619BB0F1E001347C9 /* HSTableViewController.m */; };
 		2F8494DA19BB219B001347C9 /* HSVenue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F8494D919BB219B001347C9 /* HSVenue.m */; };
+		2F8494DE19BB402E001347C9 /* HSTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F8494DD19BB402E001347C9 /* HSTableViewCell.m */; };
 		350055DEC52A47DDA6DF5349 /* libPods-Goober.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC7C5753E6574FC0A7E83331 /* libPods-Goober.a */; };
 /* End PBXBuildFile section */
 
@@ -84,6 +85,8 @@
 		2F8494D619BB0F1E001347C9 /* HSTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSTableViewController.m; sourceTree = "<group>"; };
 		2F8494D819BB219B001347C9 /* HSVenue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSVenue.h; sourceTree = "<group>"; };
 		2F8494D919BB219B001347C9 /* HSVenue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSVenue.m; sourceTree = "<group>"; };
+		2F8494DC19BB402E001347C9 /* HSTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSTableViewCell.h; sourceTree = "<group>"; };
+		2F8494DD19BB402E001347C9 /* HSTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSTableViewCell.m; sourceTree = "<group>"; };
 		BC7C5753E6574FC0A7E83331 /* libPods-Goober.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Goober.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -151,9 +154,9 @@
 			children = (
 				2F84948E19BACDB4001347C9 /* HSAppDelegate.h */,
 				2F84948F19BACDB4001347C9 /* HSAppDelegate.m */,
-				2F8494D819BB219B001347C9 /* HSVenue.h */,
-				2F8494D919BB219B001347C9 /* HSVenue.m */,
 				2F84949119BACDB4001347C9 /* Main.storyboard */,
+				2F8494DB19BB400F001347C9 /* Models */,
+				2F8494DF19BB4039001347C9 /* View */,
 				2F8494B719BAD14B001347C9 /* Controllers */,
 				2F84949419BACDB4001347C9 /* HSViewController.h */,
 				2F84949519BACDB4001347C9 /* HSViewController.m */,
@@ -230,6 +233,24 @@
 				2F8494CE19BADB39001347C9 /* NSString+HSEncode.m */,
 			);
 			name = UberAPI;
+			sourceTree = "<group>";
+		};
+		2F8494DB19BB400F001347C9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2F8494D819BB219B001347C9 /* HSVenue.h */,
+				2F8494D919BB219B001347C9 /* HSVenue.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		2F8494DF19BB4039001347C9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2F8494DC19BB402E001347C9 /* HSTableViewCell.h */,
+				2F8494DD19BB402E001347C9 /* HSTableViewCell.m */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -375,6 +396,7 @@
 				2F8494CB19BADAB0001347C9 /* HSUberHttpClient.m in Sources */,
 				2F8494D719BB0F1E001347C9 /* HSTableViewController.m in Sources */,
 				2F8494C419BADA2E001347C9 /* HSUberApplication.m in Sources */,
+				2F8494DE19BB402E001347C9 /* HSTableViewCell.m in Sources */,
 				2F8494C819BADA62001347C9 /* HSUberAuthorizationViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

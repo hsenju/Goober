@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HSTableViewController : UIViewController
+@interface HSTableViewController : PFQueryTableViewController
 
 @end

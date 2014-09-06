@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Goober/HSLoginViewController.m"
-            timestampString = "431696163.569792"
+            filePath = "Goober/HSMainViewController.m"
+            timestampString = "431700355.899147"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
-            landmarkName = "-processLoginWithAccessToken:expiryDate:"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "-initWithNibName:bundle:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
