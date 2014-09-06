@@ -9,9 +9,11 @@ from parse_rest.datatypes import Object
 
 
 class Venue(Object):
+    DEFAULT_DECAY = .5
+    POPULARITY_CUTOFF = 10
 
     @staticmethod
-    def build(cls, name, type_, pop, geotag, addr):
+    def build(name, category, pop, geotag, addr):
         location = {
             '__type': "GeoPoint",
             'latitude': geotag.lat,
@@ -28,3 +30,14 @@ class Venue(Object):
     def find_nearest_to_tweet(cls, weighted_tweet):
         return cls.Query.filter(location__nearSphere=
                                 weighted_tweet.geotag)
+
+    def update_popularity(self, factor):
+        if factor > 0:
+            self.popularity *= (1 + factor)
+        else:
+            self.popularity /= (1 + factor)
+
+    def decay(self):
+        self.update_popularity((-1 if self.popularity <
+                                self.POPULARITY_CUTOFF else 1) *
+                                self.DEFAULT_DECAY)
