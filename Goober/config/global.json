@@ -1,0 +1,11 @@
+{
+    "applications": {
+        "Goober": {
+            "applicationId": "GVHlANVgkCCANB6RdW8InlAMtU6FqG86EZC6gxel", 
+            "masterKey": "JelpRKwKL7nnpAJ1U18nNJOhCJw0YyMCIBHWDNCx"
+        }, 
+        "_default": {
+            "link": "Goober"
+        }
+    }
+}

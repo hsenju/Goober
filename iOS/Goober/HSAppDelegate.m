@@ -6,9 +6,13 @@
 //  Copyright (c) 2014 Hikari Senju. All rights reserved.
 //
 
+
 #import "HSAppDelegate.h"
+#import "HSMainViewController.h"
+#import "Constants.h"
 
 @implementation HSAppDelegate
+@synthesize currentLocation;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -41,6 +45,16 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)setCurrentLocation:(CLLocation *)aCurrentLocation {
+	currentLocation = aCurrentLocation;
+    
+	// Notify the app of the location change:
+	NSDictionary *userInfo = [NSDictionary dictionaryWithObject:currentLocation forKey:kHSLocationKey];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[[NSNotificationCenter defaultCenter] postNotificationName:kHSLocationChangeNotification object:nil userInfo:userInfo];
+	});
 }
 
 @end

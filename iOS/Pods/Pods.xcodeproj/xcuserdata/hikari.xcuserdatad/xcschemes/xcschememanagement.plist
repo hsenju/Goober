@@ -9,7 +9,22 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-Goober-Bolts.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-Goober-Facebook-iOS-SDK.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Goober-MBProgressHUD.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-Goober-Parse-iOS-SDK.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -27,22 +42,37 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>408E5B6EC6D84D51B030F2A6</key>
+		<key>0063EEF04C6B40A09D071962</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>576214B5EBCD45DAB46B37F9</key>
+		<key>1A40D1400A5846D6BB404CD6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6D2869E8471F4E4DBD0AF0D0</key>
+		<key>38A1700D5F7E4D52B226C26E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F28A4A765D78480793E7F818</key>
+		<key>3E0DAD3B406F4536BCB11C5F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>604C05553BBB428396150EAE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7928014E4C5E4CDA8748947F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D96C4E9264484EC58B89B089</key>
 		<dict>
 			<key>primary</key>
 			<true/>
