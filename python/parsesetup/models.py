@@ -11,15 +11,15 @@ from parse_rest.datatypes import Object
 class Venue(Object):
 
     @staticmethod
-    def build(cls, id_, type_, pop, geotag, addr):
+    def build(cls, name, type_, pop, geotag, addr):
         location = {
             '__type': "GeoPoint",
             'latitude': geotag.lat,
             'longitude': geotag.long
         }
 
-        return Venue(id_=id_,
-                     type_=type_,
+        return Venue(name=name,
+                     category=category,
                      location=location,
                      pop=pop,
                      addr=addr)
