@@ -7,43 +7,75 @@
 //
 
 #import "HSLoginViewController.h"
+#import <MBProgressHUD/MBProgressHUD.h>
+#import "HSAppDelegate.h"
+#import "Constants.h"
 
-@interface HSLoginViewController ()
+
+
+@interface HSLoginViewController () <UIWebViewDelegate, UIAlertViewDelegate>
+
+
+@property (weak, nonatomic) IBOutlet UIButton *loginButton;
+@property (nonatomic, weak) NSOperation *runningApiRequest;
 
 @end
 
-@implementation HSLoginViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+@implementation HSLoginViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    NSArray *access = @[@"profile"];
+    self.application = [HSUberApplication applicationWithRedirectURL:kUberRedirectUrl
+                                                                 clientId:kUberClientId
+                                                             clientSecret:kUberClientSecret
+                                                                    state:kUberState
+                                                            grantedAccess:access];
+    
+    self.client = [HSUberHttpClient clientForApplication:self.application];
+
 }
 
-- (void)didReceiveMemoryWarning
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [super viewWillAppear:animated];
+}
+- (IBAction)loginButtonPressed:(id)sender {
+    [self processUberLogin];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void)processUberLogin
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    [self.client getAuthorizationCode:^(NSString * code)
+     {
+         
+         [self.client getAccessToken:code success:^(NSDictionary *accessTokenData)
+          {
+              NSString *accessToken = [accessTokenData objectForKey:@"access_token"];
+              
+              int seconds = [[accessTokenData objectForKey:@"expires"] intValue];
+              NSDate* expiryDate = [[NSDate date] dateByAddingTimeInterval:seconds];
+              
+              [[NSUserDefaults standardUserDefaults] synchronize];
+              
+              [blockSelf processLoginWithKind:LOGIN_KIND_LINKEDIN accessToken:accessToken expiryDate:expiryDate];
+          }
+                             failure:^(NSError *error)
+          {
+          }];
+     }
+                               cancel:^
+     {
+     }
+                              failure:^(NSError *error)
+     {
+     }];
+    
+
 }
-*/
+
 
 @end

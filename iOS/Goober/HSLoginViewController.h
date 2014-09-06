@@ -6,8 +6,18 @@
 //  Copyright (c) 2014 Hikari Senju. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+//#import "BCPageController.h"
+#import "HSUberApplication.h"
+#import "HSUberHttpClient.h"
 
-@interface HSLoginViewController : UIViewController
+
+#define NOTIFY_LINKEDIN_SUCCESS @"NOTIFY_LINKEDIN_SUCCESS"
+#define NOTIFY_LINKEDIN_FAILED @"NOTIFY_LINKEDIN_FAILED"
+
+
+@interface HSLoginViewController : UIViewController <UIAlertViewDelegate>
+
+@property (nonatomic, strong) HSUberApplication *application;
+@property (nonatomic, strong) HSUberHttpClient  *client;
 
 @end
