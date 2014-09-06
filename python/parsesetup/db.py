@@ -18,7 +18,7 @@ class Parse:
     def find_nearest(self, weighted_tweet):
         connection = httplib.HTTPSConnection('api.parse.com', 443)
         params = urllib.urlencode({"limit": 10, "where": json.dumps({
-               "location": {
+               "geotag": {
                  "$nearSphere": {
                    "__type": "GeoPoint",
                    "latitude": weighted_tweet.geotag.lat,
@@ -27,11 +27,15 @@ class Parse:
                }
              })})
         connection.connect()
-        connection.request('GET', '/1/classes/PlaceObject?%s' % params, '', {
-               "X-Parse-Application-Id": "{}".format(parsesetup_cfg.PARSE_APPLICATION_ID),
-               "X-Parse-REST-API-Key": "{}".format(parsesetup_cfg.PARSE_REST_API_KEY)
+        connection.request('GET', '/1/classes/Venue?%s' % params, '', {
+               "X-Parse-Application-Id": "{}".format(
+                   parsesetup_cfg.PARSE_APPLICATION_ID),
+               "X-Parse-Master-Key": "{}".format(
+                   parsesetup_cfg.PARSE_MASTER_KEY)
              })
         result = json.loads(connection.getresponse().read())
+
+        print result
 
         try:
             result[0]['objectId']
