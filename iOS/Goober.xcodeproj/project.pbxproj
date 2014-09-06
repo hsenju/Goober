@@ -21,6 +21,7 @@
 		2F8494A119BACDB4001347C9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F84948319BACDB4001347C9 /* UIKit.framework */; };
 		2F8494A919BACDB4001347C9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2F8494A719BACDB4001347C9 /* InfoPlist.strings */; };
 		2F8494AB19BACDB4001347C9 /* GooberTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F8494AA19BACDB4001347C9 /* GooberTests.m */; };
+		2F8494B619BAD141001347C9 /* HSLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F8494B519BAD141001347C9 /* HSLoginViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,8 @@
 		2F8494A619BACDB4001347C9 /* GooberTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GooberTests-Info.plist"; sourceTree = "<group>"; };
 		2F8494A819BACDB4001347C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2F8494AA19BACDB4001347C9 /* GooberTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GooberTests.m; sourceTree = "<group>"; };
+		2F8494B419BAD141001347C9 /* HSLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSLoginViewController.h; sourceTree = "<group>"; };
+		2F8494B519BAD141001347C9 /* HSLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSLoginViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +118,7 @@
 				2F84948E19BACDB4001347C9 /* HSAppDelegate.h */,
 				2F84948F19BACDB4001347C9 /* HSAppDelegate.m */,
 				2F84949119BACDB4001347C9 /* Main.storyboard */,
+				2F8494B719BAD14B001347C9 /* Controllers */,
 				2F84949419BACDB4001347C9 /* HSViewController.h */,
 				2F84949519BACDB4001347C9 /* HSViewController.m */,
 				2F84949719BACDB4001347C9 /* Images.xcassets */,
@@ -150,6 +154,15 @@
 				2F8494A719BACDB4001347C9 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2F8494B719BAD14B001347C9 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				2F8494B419BAD141001347C9 /* HSLoginViewController.h */,
+				2F8494B519BAD141001347C9 /* HSLoginViewController.m */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -251,6 +264,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F84949619BACDB4001347C9 /* HSViewController.m in Sources */,
+				2F8494B619BAD141001347C9 /* HSLoginViewController.m in Sources */,
 				2F84948C19BACDB4001347C9 /* main.m in Sources */,
 				2F84949019BACDB4001347C9 /* HSAppDelegate.m in Sources */,
 			);
