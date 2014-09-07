@@ -10,7 +10,6 @@
 
 @interface HSVenue ()
 
-// Redefine these properties to make them read/write for internal class accesses and mutations.
 @property (nonatomic, assign) CLLocationCoordinate2D coordinate;
 
 @property (nonatomic, copy) NSString *name;
@@ -54,14 +53,11 @@
 	}
     
 	if (aVenue.object && self.object) {
-		// We have a PFObject inside the PAWPost, use that instead.
 		if ([aVenue.object.objectId compare:self.object.objectId] != NSOrderedSame) {
 			return NO;
 		}
 		return YES;
 	} else {
-		// Fallback code:
-        
 		if ([aVenue.title compare:self.title] != NSOrderedSame ||
 			[aVenue.subtitle compare:self.subtitle] != NSOrderedSame ||
 			aVenue.coordinate.latitude != self.coordinate.latitude ||

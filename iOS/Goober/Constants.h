@@ -14,12 +14,11 @@
 
 static NSUInteger const kHSMaximumCharacterCount = 140;
 
-static double const kHSFeetToMeters = 0.3048; // this is an exact value.
-static double const kHSFeetToMiles = 5280.0; // this is an exact value.
+static double const kHSFeetToMeters = 0.3048;
+static double const kHSFeetToMiles = 5280.0;
 static double const kHSSearchDistance = 20.0;
-static double const kHSMetersInAKilometer = 1000.0; // this is an exact value.
-
-static NSUInteger const kHSSearch = 5; // query limit for pins and tableviewcells
+static double const kHSMetersInAKilometer = 1000.0;
+static NSUInteger const kHSSearch = 5; 
 
 static NSString * const kHSLocationKey = @"location";
 static NSString * const kHSParseVenueClassKey = @"Venue";

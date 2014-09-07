@@ -67,7 +67,6 @@
 		2F8494AA19BACDB4001347C9 /* GooberTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GooberTests.m; sourceTree = "<group>"; };
 		2F8494B419BAD141001347C9 /* HSLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSLoginViewController.h; sourceTree = "<group>"; };
 		2F8494B519BAD141001347C9 /* HSLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSLoginViewController.m; sourceTree = "<group>"; };
-		2F8494BF19BAD8A6001347C9 /* Macros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Macros.h; sourceTree = "<group>"; };
 		2F8494C119BAD8EE001347C9 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		2F8494C219BADA2E001347C9 /* HSUberApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSUberApplication.h; sourceTree = "<group>"; };
 		2F8494C319BADA2E001347C9 /* HSUberApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSUberApplication.m; sourceTree = "<group>"; };
@@ -75,7 +74,6 @@
 		2F8494C719BADA62001347C9 /* HSUberAuthorizationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSUberAuthorizationViewController.m; sourceTree = "<group>"; };
 		2F8494C919BADAB0001347C9 /* HSUberHttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSUberHttpClient.h; sourceTree = "<group>"; };
 		2F8494CA19BADAB0001347C9 /* HSUberHttpClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSUberHttpClient.m; sourceTree = "<group>"; };
-		2F8494CC19BADACC001347C9 /* HSMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HSMacros.h; sourceTree = "<group>"; };
 		2F8494CD19BADB39001347C9 /* NSString+HSEncode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HSEncode.h"; sourceTree = "<group>"; };
 		2F8494CE19BADB39001347C9 /* NSString+HSEncode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HSEncode.m"; sourceTree = "<group>"; };
 		2F8494D019BB017D001347C9 /* HSMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSMainViewController.h; sourceTree = "<group>"; };
@@ -213,7 +211,6 @@
 		2F8494C019BAD8AD001347C9 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				2F8494BF19BAD8A6001347C9 /* Macros.h */,
 				2F8494C119BAD8EE001347C9 /* Constants.h */,
 			);
 			name = Common;
@@ -228,7 +225,6 @@
 				2F8494C719BADA62001347C9 /* HSUberAuthorizationViewController.m */,
 				2F8494C919BADAB0001347C9 /* HSUberHttpClient.h */,
 				2F8494CA19BADAB0001347C9 /* HSUberHttpClient.m */,
-				2F8494CC19BADACC001347C9 /* HSMacros.h */,
 				2F8494CD19BADB39001347C9 /* NSString+HSEncode.h */,
 				2F8494CE19BADB39001347C9 /* NSString+HSEncode.m */,
 			);

@@ -42,7 +42,6 @@
 }
 - (IBAction)loginButtonPressed:(id)sender {
     [self performSegueWithIdentifier:@"SBPushIdentifier" sender:self];
-    //[self processUberLogin];
 }
 
 - (void)processUberLogin

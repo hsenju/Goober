@@ -53,7 +53,6 @@
 - (void)setCurrentLocation:(CLLocation *)aCurrentLocation {
 	currentLocation = aCurrentLocation;
     
-	// Notify the app of the location change:
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObject:currentLocation forKey:kHSLocationKey];
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[[NSNotificationCenter defaultCenter] postNotificationName:kHSLocationChangeNotification object:nil userInfo:userInfo];

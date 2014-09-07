@@ -25,7 +25,6 @@ NSString *kUberDeniedByUser = @"the+user+denied+your+request";
 
 @end
 
-//todo: handle no network
 @implementation HSUberAuthorizationViewController
 
 BOOL handlingRedirectURL;
@@ -33,7 +32,6 @@ BOOL handlingRedirectURL;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
     }
     return self;
 }
@@ -56,7 +54,7 @@ BOOL handlingRedirectURL;
     self.authenticationWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     self.authenticationWebView.delegate = self;
     self.authenticationWebView.hidden = YES;
-    self.authenticationWebView.backgroundColor = UIColorWithRGBValues(222, 222, 222);
+    self.authenticationWebView.backgroundColor = [UIColor colorWithRed:222 green:222 blue:222 alpha:1];
     self.authenticationWebView.alpha = 0;
     [self.view addSubview:self.authenticationWebView];
     
@@ -74,7 +72,6 @@ BOOL handlingRedirectURL;
 {
     [super viewDidAppear:animated];
     
-    //NSString *uber = [NSString stringWithFormat:@"https://www.linkedin.com/uas/oauth2/authorization?response_type=code&client_id=%@&scope=%@&state=%@&redirect_uri=%@", self.application.clientId, self.application.grantedAccessString, self.application.state, [self.application.redirectURL HSEncode]];
      NSString *uber = [NSString stringWithFormat:@"https://login.uber.com/oauth/authorize?response_type=code&client_id=%@&scope=%@&state=%@&redirect_uri=%@", self.application.clientId, self.application.grantedAccessString, self.application.state, [self.application.redirectURL HSEncode]];
     [self.authenticationWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:uber]]];
 }
@@ -88,13 +85,10 @@ BOOL handlingRedirectURL;
     
     if (([url rangeOfString:@"?report-failure"].location != NSNotFound) || ([url rangeOfString:@"?report%2Efailure"].location != NSNotFound))
     {
-        // LinkedIn error
         NSError *error = [[NSError alloc] initWithDomain:kUberErrorDomain code:1 userInfo:@{NSLocalizedDescriptionKey:@"There was an unexpected error communicating with LinkedIn."}];
         self.failureCallback(error);
         return FALSE;
     }
-    
-    //prevent loading URL if it is the redirectURL
     handlingRedirectURL = [url hasPrefix:self.application.redirectURL];
     
     if (handlingRedirectURL) {
@@ -108,9 +102,7 @@ BOOL handlingRedirectURL;
             }
         } else {
             NSString *receivedState = [self extractGetParameter:@"state" fromURLString: url];
-            //assert that the state is as we expected it to be
             if ([self.application.state isEqualToString:receivedState]) {
-                //extract the code from the url
                 NSString *authorizationCode = [self extractGetParameter:@"code" fromURLString: url];
                 self.successCallback(authorizationCode);
             } else {
