@@ -144,48 +144,105 @@
     return 70;
 }
 
+- (AFHTTPRequestOperation *)HTTPRequestOperationWithRequest:(NSURLRequest *)urlRequest
+                                                    success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    return [self HTTPRequestOperationWithRequest:urlRequest success:success failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+
     
     if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"uber://"]]) {
         
-        NSString *productID;
-        
-        ////
-        AFHTTPRequestOperationManager* networkingClient = [[AFHTTPRequestOperationManager alloc] initWithBaseURL: [NSURL URLWithString:@"https://api.uber.com/"]];
-        
-        NSDictionary *params = @{@"AUTHORIZATION":@"Bearer h7EsMvwXfvo6F1RSmOaxtdw26aJ5Cz9ohNaNmHfJ"};
-        
-        NSMutableURLRequest *request = [networkingClient.requestSerializer requestWithMethod:@"GET" URLString:@"https://api.uber.com/v1/products?latitude=%@&longitude=%@" parameters:params error:nil];
-        
-        if (contentHeader.length > 0)
-        {
-            [request setValue:[NSString stringWithFormat: @"application/json; scheme=%@; version=%@", scheme, version] forHTTPHeaderField:contentHeader];
-        }
-        [request setValue:xSessionToken forHTTPHeaderField:@"x-session-token"];
-        
-        return request;
-
-        + (NSMutableURLRequest*)setupGetRequestWithUrlPart:(NSString*)urlPart scheme:(NSString*)scheme version:(NSString*)version error:(NSError *__autoreleasing *)error
-        {
-            return [BaseEntity setupRequestWithUrlPart:urlPart method:@"GET" contentHeader:@"Accept" scheme:scheme version:version params:nil error:error];
-        }
-        
-        ///
+        __block NSString *productID;
         
         HSAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
         
-        PFObject *object = [self.objects objectAtIndex:indexPath.row];
-        HSVenue *venueFromObject = [[HSVenue alloc] initWithPFObject:object];
-        NSString *dropoffAddressString = [venueFromObject.address urlEncode];
-        NSString *dropoffNameString = [venueFromObject.name urlEncode];
+        NSString *string =[NSString stringWithFormat:@"https://api.uber.com/v1/products?latitude=%f&longitude=%f&server_token=h7EsMvwXfvo6F1RSmOaxtdw26aJ5Cz9ohNaNmHfJ",appDelegate.currentLocation.coordinate.latitude,appDelegate.currentLocation.coordinate.longitude];
+        NSURL *url = [NSURL URLWithString:string];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
         
-        UIWebView* webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-        webView.hidden = YES;
-        [self.view addSubview:webView];
-        NSString *uber = [NSString stringWithFormat:@"uber://?action=setPickup&pickup[latitude]=%f&pickup[longitude]=%f&dropoff[longitude]=%f&dropoff[latitude]=%f&dropoff[nickname]=%@&dropoff[formatted_address]=%@&product_id=%@", appDelegate.currentLocation.coordinate.latitude, appDelegate.currentLocation.coordinate.longitude, venueFromObject.coordinate.latitude, venueFromObject.coordinate.longitude, dropoffNameString, dropoffAddressString, productID];
-        [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:uber]]];
+        AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+        operation.responseSerializer = [AFJSONResponseSerializer serializer];
+        
+        [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id JSON) {
+            NSArray *innerJSON = [JSON objectForKey:@"products"];
+            
+            for (id product in innerJSON){
+                if ([[product objectForKey:@"display_name"] isEqualToString: @"uberX"]){
+                    productID = [product objectForKey:@"product_id"];
+                    
+                    PFObject *object = [self.objects objectAtIndex:indexPath.row];
+                    HSVenue *venueFromObject = [[HSVenue alloc] initWithPFObject:object];
+                    
+                    UIWebView* webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+
+                    [self.view addSubview:webView];
+                    NSString *uber = [NSString stringWithFormat:@"uber://?action=setPickup&pickup[latitude]=%f&pickup[longitude]=%f&dropoff[latitude]=%f&dropoff[longitude]=%f&product_id=%@", appDelegate.currentLocation.coordinate.latitude, appDelegate.currentLocation.coordinate.longitude, venueFromObject.coordinate.latitude, venueFromObject.coordinate.longitude, productID];
+                    [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:uber]]];
+                }
+            }
+
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+            // 4
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error Retrieving Weather"
+                                                                message:[error localizedDescription]
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"Ok"
+                                                      otherButtonTitles:nil];
+            [alertView show];
+        }];
+        
+        // 5
+        [operation start];
+        
+        
+        //////////
+        ////
+//        AFHTTPRequestOperationManager* networkingClient = [[AFHTTPRequestOperationManager alloc] initWithBaseURL: [NSURL URLWithString:@"https://api.uber.com/"]];
+//        
+//        NSDictionary *params = @{@"AUTHORIZATION":@"Bearer h7EsMvwXfvo6F1RSmOaxtdw26aJ5Cz9ohNaNmHfJ"};
+//        
+//        NSMutableURLRequest *request = [networkingClient.requestSerializer requestWithMethod:@"GET" URLString:[NSString stringWithFormat:@"https://api.uber.com/v1/products?latitude=%f&longitude=%f",appDelegate.currentLocation.coordinate.latitude,appDelegate.currentLocation.coordinate.longitude] parameters:params error:nil];
+//        
+//        //[request setValue:[NSString stringWithFormat: @"application/json; AUTHORIZATION=Bearer h7EsMvwXfvo6F1RSmOaxtdw26aJ5Cz9ohNaNmHfJ"] forHTTPHeaderField:@"Accept"];
+//        
+//        NSOperation *operation = [networkingClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON){
+//           NSArray *innerJSON = [JSON objectForKey:@"prices"];
+//    
+//           for (id product in innerJSON){
+//               if ([[product objectForKey:@"display_name"] isEqualToString: @"uberX"]){
+//                   productID = [product objectForKey:@"product_id"];
+//                   
+//                   PFObject *object = [self.objects objectAtIndex:indexPath.row];
+//                   HSVenue *venueFromObject = [[HSVenue alloc] initWithPFObject:object];
+//                   NSString *dropoffAddressString = [venueFromObject.address urlEncode];
+//                   NSString *dropoffNameString = [venueFromObject.name urlEncode];
+//                   
+//                   UIWebView* webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+//                   webView.hidden = YES;
+//                   [self.view addSubview:webView];
+//                   NSString *uber = [NSString stringWithFormat:@"uber://?action=setPickup&pickup[latitude]=%f&pickup[longitude]=%f&dropoff[longitude]=%f&dropoff[latitude]=%f&dropoff[nickname]=%@&dropoff[formatted_address]=%@&product_id=%@", appDelegate.currentLocation.coordinate.latitude, appDelegate.currentLocation.coordinate.longitude, venueFromObject.coordinate.latitude, venueFromObject.coordinate.longitude, dropoffNameString, dropoffAddressString, productID];
+//                   [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:uber]]];
+//               }
+//           }
+//           
+//       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//           true;
+//           
+//       }];
+//        
+//        [networkingClient.operationQueue addOperation:operation];
+        
+
+        
+
         
     }
     else {
