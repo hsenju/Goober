@@ -39,7 +39,7 @@ class Parse:
             place['location']['lat'], place['location']['lng'])
         addr = ' '.join(place['location']['formattedAddress'])
 
-        if category:
+        if category and category not in Venue.BLACK_LIST:
             try:
                 Venue.Query.get(name=name)
                 print '{} already exists'.format(name)
