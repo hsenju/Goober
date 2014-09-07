@@ -151,7 +151,35 @@
         
         NSString *productID;
         
+        ////
         
+        NetworkingClient* networkingClient = ((HSAppDelegate*)[UIApplication sharedApplication].delegate).networkingClient;
+        
+        NSString *xSessionToken = [[NSUserDefaults standardUserDefaults] valueForKey:kBCXSessionToken];
+        
+        NSParameterAssert(urlPart);
+        NSParameterAssert(xSessionToken);
+        
+        NSURL *URLString = [NSURL URLWithString:urlPart relativeToURL:networkingClient.baseURL];
+        
+        NSDictionary *params = @{@"AUTHORIZATION":@"Bearer h7EsMvwXfvo6F1RSmOaxtdw26aJ5Cz9ohNaNmHfJ"};
+        
+        NSMutableURLRequest *request = [@"https://api.uber.com/v1/products?latitude=37.7759792&longitude=-122.41823" requestWithMethod:@"GET" URLString:URLString.absoluteString parameters:params error:nil];
+        
+        if (contentHeader.length > 0)
+        {
+            [request setValue:[NSString stringWithFormat: @"application/json; scheme=%@; version=%@", scheme, version] forHTTPHeaderField:contentHeader];
+        }
+        [request setValue:xSessionToken forHTTPHeaderField:@"x-session-token"];
+        
+        return request;
+
+        + (NSMutableURLRequest*)setupGetRequestWithUrlPart:(NSString*)urlPart scheme:(NSString*)scheme version:(NSString*)version error:(NSError *__autoreleasing *)error
+        {
+            return [BaseEntity setupRequestWithUrlPart:urlPart method:@"GET" contentHeader:@"Accept" scheme:scheme version:version params:nil error:error];
+        }
+        
+        ///
         
         HSAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
         
