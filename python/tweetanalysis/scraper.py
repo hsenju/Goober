@@ -18,6 +18,7 @@ import twitter_cfg
 #             raise StopIteration
 #         else:
 
+
 class Scraper(object):
     LOCATION = "-74,40,-73,41"
     # BUMP THIS UP LATER
