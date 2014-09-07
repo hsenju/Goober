@@ -6,6 +6,9 @@ target "Goober" do
 pod 'AFNetworking', '~> 2.0'
 pod 'Reachability'
 pod 'MBProgressHUD', '~> 0.0'
+pod 'Parse-iOS-SDK', '~> 1.2.21'
+pod 'MobileDeepLinking-iOS', '~> 0.2.0'
+pod 'NSString-UrlEncode', '~> 1.1.0'
 
 end
 

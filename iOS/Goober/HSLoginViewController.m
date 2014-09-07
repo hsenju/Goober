@@ -8,8 +8,6 @@
 
 #import "HSLoginViewController.h"
 #import <MBProgressHUD/MBProgressHUD.h>
-#import "HSAppDelegate.h"
-#import "Constants.h"
 
 
 
@@ -27,7 +25,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     NSArray *access = @[@"profile"];
     self.application = [HSUberApplication applicationWithRedirectURL:kUberRedirectUrl
                                                                  clientId:kUberClientId
@@ -44,7 +41,7 @@
     [super viewWillAppear:animated];
 }
 - (IBAction)loginButtonPressed:(id)sender {
-    [self processUberLogin];
+    [self performSegueWithIdentifier:@"SBPushIdentifier" sender:self];
 }
 
 - (void)processUberLogin
@@ -61,7 +58,7 @@
               
               [[NSUserDefaults standardUserDefaults] synchronize];
               
-              [blockSelf processLoginWithKind:LOGIN_KIND_LINKEDIN accessToken:accessToken expiryDate:expiryDate];
+              [self processLoginWithAccessToken:accessToken expiryDate:expiryDate];
           }
                              failure:^(NSError *error)
           {
@@ -75,6 +72,10 @@
      }];
     
 
+}
+
+-(void) processLoginWithAccessToken: (NSString*)accessToken expiryDate:(NSDate*)expiryDate {
+    [self performSegueWithIdentifier:@"SBPushIdentifier" sender:self];
 }
 
 
