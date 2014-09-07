@@ -13,8 +13,8 @@ from parse_rest.datatypes import Object
 
 class Venue(Object):
     DEFAULT_DECAY = 1
-    POPULARITY_CUTOFF = 10
-    MAX_POP = 500
+    POPULARITY_CUTOFF = 0
+    MAX_POP = 100
     BLACK_LIST = ["Police Station", "Medical", "Hospital", "Conference room", "Dentist's Office", "Pharmacy", "Farm",
                   "Hardware", "Bank"]
 
@@ -50,7 +50,7 @@ class Venue(Object):
         else:
             self.pop /= (1 + abs(factor))
 
-        self.pop = min(self.pop, 500)
+        self.pop = min(self.pop, self.MAX_POP)
 
         self.save()
 
