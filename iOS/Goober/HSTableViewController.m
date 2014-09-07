@@ -15,9 +15,13 @@
 
 @interface HSTableViewController ()
 
+@property (strong, nonatomic) UIWebView* webView;
+
 @end
 
 @implementation HSTableViewController
+
+@synthesize webView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -84,7 +88,9 @@
 }
 
 - (void)objectsWillLoad {
+    [webView stopLoading];
     [super objectsWillLoad];
+    
     
     // This method is called before a PFQuery is fired to get more objects
 }
@@ -135,7 +141,7 @@
     
     }
 
-    [cell updateCell:[NSString stringWithFormat:@"%d",indexPath.row + 1] address:[object objectForKey:@"addr"] name:[object objectForKey:@"name"]];
+    [cell updateCell:[NSString stringWithFormat:@"%ld",indexPath.row + 1] address:[object objectForKey:@"addr"] name:[object objectForKey:@"name"]];
 	cell.selectionStyle = UITableViewCellSelectionStyleBlue;
 	return cell;
 }
@@ -174,16 +180,19 @@
             
             for (id product in innerJSON){
                 if ([[product objectForKey:@"display_name"] isEqualToString: @"uberX"]){
+                    
                     productID = [product objectForKey:@"product_id"];
                     
                     PFObject *object = [self.objects objectAtIndex:indexPath.row];
                     HSVenue *venueFromObject = [[HSVenue alloc] initWithPFObject:object];
+                    NSString *dropoffAddressString = [venueFromObject.address urlEncode];
                     
-                    UIWebView* webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-
-                    [self.view addSubview:webView];
-                    NSString *uber = [NSString stringWithFormat:@"uber://?action=setPickup&pickup[latitude]=%f&pickup[longitude]=%f&dropoff[latitude]=%f&dropoff[longitude]=%f&product_id=%@", appDelegate.currentLocation.coordinate.latitude, appDelegate.currentLocation.coordinate.longitude, venueFromObject.coordinate.latitude, venueFromObject.coordinate.longitude, productID];
+                    if (!webView){
+                        webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+                        [self.view addSubview:webView];}
+                    NSString *uber = [NSString stringWithFormat:@"uber://?action=setPickup&pickup[latitude]=%f&pickup[longitude]=%f&dropoff[latitude]=%f&dropoff[longitude]=%f&dropoff[formatted_address]=%@&product_id=%@", appDelegate.currentLocation.coordinate.latitude, appDelegate.currentLocation.coordinate.longitude, venueFromObject.coordinate.latitude, venueFromObject.coordinate.longitude, dropoffAddressString, productID];
                     [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:uber]]];
+            
                 }
             }
 
@@ -201,48 +210,6 @@
         
         // 5
         [operation start];
-        
-        
-        //////////
-        ////
-//        AFHTTPRequestOperationManager* networkingClient = [[AFHTTPRequestOperationManager alloc] initWithBaseURL: [NSURL URLWithString:@"https://api.uber.com/"]];
-//        
-//        NSDictionary *params = @{@"AUTHORIZATION":@"Bearer h7EsMvwXfvo6F1RSmOaxtdw26aJ5Cz9ohNaNmHfJ"};
-//        
-//        NSMutableURLRequest *request = [networkingClient.requestSerializer requestWithMethod:@"GET" URLString:[NSString stringWithFormat:@"https://api.uber.com/v1/products?latitude=%f&longitude=%f",appDelegate.currentLocation.coordinate.latitude,appDelegate.currentLocation.coordinate.longitude] parameters:params error:nil];
-//        
-//        //[request setValue:[NSString stringWithFormat: @"application/json; AUTHORIZATION=Bearer h7EsMvwXfvo6F1RSmOaxtdw26aJ5Cz9ohNaNmHfJ"] forHTTPHeaderField:@"Accept"];
-//        
-//        NSOperation *operation = [networkingClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON){
-//           NSArray *innerJSON = [JSON objectForKey:@"prices"];
-//    
-//           for (id product in innerJSON){
-//               if ([[product objectForKey:@"display_name"] isEqualToString: @"uberX"]){
-//                   productID = [product objectForKey:@"product_id"];
-//                   
-//                   PFObject *object = [self.objects objectAtIndex:indexPath.row];
-//                   HSVenue *venueFromObject = [[HSVenue alloc] initWithPFObject:object];
-//                   NSString *dropoffAddressString = [venueFromObject.address urlEncode];
-//                   NSString *dropoffNameString = [venueFromObject.name urlEncode];
-//                   
-//                   UIWebView* webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-//                   webView.hidden = YES;
-//                   [self.view addSubview:webView];
-//                   NSString *uber = [NSString stringWithFormat:@"uber://?action=setPickup&pickup[latitude]=%f&pickup[longitude]=%f&dropoff[longitude]=%f&dropoff[latitude]=%f&dropoff[nickname]=%@&dropoff[formatted_address]=%@&product_id=%@", appDelegate.currentLocation.coordinate.latitude, appDelegate.currentLocation.coordinate.longitude, venueFromObject.coordinate.latitude, venueFromObject.coordinate.longitude, dropoffNameString, dropoffAddressString, productID];
-//                   [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:uber]]];
-//               }
-//           }
-//           
-//       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//           true;
-//           
-//       }];
-//        
-//        [networkingClient.operationQueue addOperation:operation];
-        
-
-        
-
         
     }
     else {
