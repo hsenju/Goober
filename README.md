@@ -1,6 +1,6 @@
 Goober
 ======
-MHACKS IV Project: This app allows you to see the trending areas around you on Twitter and then order an Uber to that location. Watch video at https://www.youtube.com/watch?v=7dIo1W36xAE&feature=youtu.be to see demo. Our website is located at http://goober-app.me/ and you can view the heatmap at /heatmap.
+MHACKS IV Project: This app allows you to see the trending areas around you on Twitter and then order an Uber to that location. Watch video at https://www.youtube.com/watch?v=7dIo1W36xAE&feature=youtu.be to see demo. Our website is located at http://goober-app.me/ and you can view the heatmap at http://goober-app.me/heatmap.
 
 Our inspiration came from our interest in working with the newly released Uber API. We decided to combine the Uber API with our desire to use techniques such as machine learning techniques like sentiment analysis. Our app aims to help users seamlessly discover and participate in the popular events around them.
 
