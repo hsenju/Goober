@@ -8,7 +8,6 @@
 
 #import "HSUberAuthorizationViewController.h"
 #import "NSString+HSEncode.h"
-#import "Macros.h"
 #import <MBProgressHUD/MBProgressHUD.h>
 
 NSString *kUberErrorDomain = @"HSUberERROR";
