@@ -1,6 +1,6 @@
 import datetime
 
-INTERVAL_SEC = 60
+INTERVAL_SEC = 3600
 
 
 class Timer(object):

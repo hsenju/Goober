@@ -4,8 +4,8 @@ from parse_rest import query
 
 import tweetanalysis.analyzer
 
-
 class Parse:
+    CHUNK_SIZE = 100
 
     def find_nearest(self, weighted_tweet):
         res = Venue.Query.filter(location__nearSphere=
@@ -20,13 +20,19 @@ class Parse:
 
         venue.update_popularity(weighted_tweet.weight)
 
-        venue.save()
-
     def decay_all(self):
-        venues = Venue.Query.all()
+        num_proc = self.CHUNK_SIZE
+        chunks = 0
+        while num_proc == self.CHUNK_SIZE:
+            venues = Venue.Query.all().skip(
+                chunks * self.CHUNK_SIZE).limit(self.CHUNK_SIZE)
 
-        for venue in venues:
-            venue.decay()
+            for venue in venues:
+                venue.decay()
+
+            num_proc = len(venues)
+            chunks += 1
+            print "Chunks decayed: {}".format(chunks)
 
     def add_if_not_exists(self, place):
         name = place['name']
