@@ -11,6 +11,7 @@
 #import "HSTableViewCell.h"
 #import "HSVenue.h"
 #import "NSString+UrlEncode.h"
+#import <AFHTTPRequestOperationManager.h>
 
 @interface HSTableViewController ()
 
@@ -152,19 +153,11 @@
         NSString *productID;
         
         ////
-        
-        NetworkingClient* networkingClient = ((HSAppDelegate*)[UIApplication sharedApplication].delegate).networkingClient;
-        
-        NSString *xSessionToken = [[NSUserDefaults standardUserDefaults] valueForKey:kBCXSessionToken];
-        
-        NSParameterAssert(urlPart);
-        NSParameterAssert(xSessionToken);
-        
-        NSURL *URLString = [NSURL URLWithString:urlPart relativeToURL:networkingClient.baseURL];
+        AFHTTPRequestOperationManager* networkingClient = [[AFHTTPRequestOperationManager alloc] initWithBaseURL: [NSURL URLWithString:@"https://api.uber.com/"]];
         
         NSDictionary *params = @{@"AUTHORIZATION":@"Bearer h7EsMvwXfvo6F1RSmOaxtdw26aJ5Cz9ohNaNmHfJ"};
         
-        NSMutableURLRequest *request = [@"https://api.uber.com/v1/products?latitude=37.7759792&longitude=-122.41823" requestWithMethod:@"GET" URLString:URLString.absoluteString parameters:params error:nil];
+        NSMutableURLRequest *request = [networkingClient.requestSerializer requestWithMethod:@"GET" URLString:@"https://api.uber.com/v1/products?latitude=%@&longitude=%@" parameters:params error:nil];
         
         if (contentHeader.length > 0)
         {
