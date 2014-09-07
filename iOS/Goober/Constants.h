@@ -16,7 +16,7 @@ static NSUInteger const kHSMaximumCharacterCount = 140;
 
 static double const kHSFeetToMeters = 0.3048; // this is an exact value.
 static double const kHSFeetToMiles = 5280.0; // this is an exact value.
-static double const kHSMaximumSearchDistance = 20.0;
+static double const kHSSearchDistance = 20.0;
 static double const kHSMetersInAKilometer = 1000.0; // this is an exact value.
 
 static NSUInteger const kHSSearch = 5; // query limit for pins and tableviewcells
@@ -29,3 +29,5 @@ static NSString * const kHSParseUserKey = @"user";
 static NSString * const kHSParseUsernameKey = @"username";
 static NSString * const kHSParseTextKey = @"text";
 static NSString * const kHSParseLocationKey = @"location";
+static NSString * const kHSParseAddressKey = @"addr";
+static NSString * const kHSParseNameKey = @"name";

@@ -22,7 +22,6 @@
 
 @property (strong, nonatomic) UIViewController *viewController;
 
-@property (nonatomic, assign) CLLocationAccuracy filterDistance;
 @property (nonatomic, strong) CLLocation *currentLocation;
 
 - (void)presentWelcomeViewController;

@@ -38,6 +38,8 @@
 	self.object = anObject;
 	self.geopoint = [anObject objectForKey:kHSParseLocationKey];
 	self.user = [anObject objectForKey:kHSParseUserKey];
+    self.address = [anObject objectForKey:kHSParseAddressKey];
+    self.name = [anObject objectForKey:kHSParseNameKey];
     
 	[anObject fetchIfNeeded];
 	CLLocationCoordinate2D aCoordinate = CLLocationCoordinate2DMake(self.geopoint.latitude, self.geopoint.longitude);

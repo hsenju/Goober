@@ -11,6 +11,7 @@
 #import "HSMainViewController.h"
 #import "Constants.h"
 
+
 @implementation HSAppDelegate
 @synthesize currentLocation;
 
@@ -57,6 +58,13 @@
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[[NSNotificationCenter defaultCenter] postNotificationName:kHSLocationChangeNotification object:nil userInfo:userInfo];
 	});
+}
+
+-(BOOL)application:(UIApplication *)application
+           openURL:(NSURL *)url
+ sourceApplication:(NSString *)sourceApplication
+        annotation:(id)annotation{
+    return YES;
 }
 
 @end

@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Goober/HSMainViewController.m"
-            timestampString = "431700355.899147"
+            filePath = "Goober/HSAppDelegate.m"
+            timestampString = "431730522.706102"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
-            landmarkName = "-initWithNibName:bundle:"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
+            landmarkName = "-application:openURL:sourceApplication:annotation:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

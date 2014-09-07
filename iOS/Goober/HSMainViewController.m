@@ -73,7 +73,7 @@
 	//self.mapPannedSinceLocationUpdate = NO;
     
     HSAppDelegate *appDelegate = (HSAppDelegate *)[[UIApplication sharedApplication] delegate];
-    [self queryForAllVenuesNearLocation:appDelegate.currentLocation withNearbyDistance:appDelegate.filterDistance];
+    [self queryForAllVenuesNearLocation:appDelegate.currentLocation withNearbyDistance:kHSSearchDistance];
     
     [mapView setShowsUserLocation:YES];
     
@@ -86,7 +86,7 @@
     
     HSAppDelegate *appDelegate = (HSAppDelegate *)[[UIApplication sharedApplication] delegate];
     //MKCoordinateRegion newRegion = MKCoordinateRegionMakeWithDistance(appDelegate.currentLocation.coordinate, appDelegate.filterDistance * 2, appDelegate.filterDistance * 2);
-    [self queryForAllVenuesNearLocation:appDelegate.currentLocation withNearbyDistance:appDelegate.filterDistance];
+    [self queryForAllVenuesNearLocation:appDelegate.currentLocation withNearbyDistance:kHSSearchDistance];
     
     //[self.mapView setRegion:newRegion animated:YES];
     self.mapPannedSinceLocationUpdate = NO;
@@ -95,8 +95,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     HSAppDelegate *appDelegate = (HSAppDelegate *)[[UIApplication sharedApplication] delegate];
-    MKCoordinateRegion newRegion = MKCoordinateRegionMakeWithDistance(appDelegate.currentLocation.coordinate, appDelegate.filterDistance * 2, appDelegate.filterDistance * 2);
-    [self queryForAllVenuesNearLocation:appDelegate.currentLocation withNearbyDistance:appDelegate.filterDistance];
+    MKCoordinateRegion newRegion = MKCoordinateRegionMakeWithDistance(appDelegate.currentLocation.coordinate, kHSSearchDistance * 500, kHSSearchDistance * 500);
+    [self queryForAllVenuesNearLocation:appDelegate.currentLocation withNearbyDistance:kHSSearchDistance];
     
     [self.mapView setRegion:newRegion animated:YES];
     self.mapPannedSinceLocationUpdate = NO;
@@ -127,7 +127,7 @@
 	// If they panned the map since our last location update, don't recenter it.
 	if (!self.mapPannedSinceLocationUpdate) {
 		// Set the map's region centered on their new location at 2x filterDistance
-		MKCoordinateRegion newRegion = MKCoordinateRegionMakeWithDistance(appDelegate.currentLocation.coordinate, appDelegate.filterDistance * 2.0f, appDelegate.filterDistance * 2.0f);
+		MKCoordinateRegion newRegion = MKCoordinateRegionMakeWithDistance(appDelegate.currentLocation.coordinate, kHSSearchDistance * 500.0f, kHSSearchDistance * 500.0f);
         
 		BOOL oldMapPannedValue = self.mapPannedSinceLocationUpdate;
 		[mapView setRegion:newRegion animated:YES];
@@ -170,13 +170,13 @@
     
 	HSAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
 	appDelegate.currentLocation = newLocation;
-    [self queryForAllVenuesNearLocation:appDelegate.currentLocation withNearbyDistance:appDelegate.filterDistance];
+    [self queryForAllVenuesNearLocation:appDelegate.currentLocation withNearbyDistance:kHSSearchDistance];
 }
 
 - (void) startShowingUserHeading:(id)sender{
     HSAppDelegate *appDelegate = (HSAppDelegate *)[[UIApplication sharedApplication] delegate];
-    MKCoordinateRegion newRegion = MKCoordinateRegionMakeWithDistance(appDelegate.currentLocation.coordinate, appDelegate.filterDistance * 2, appDelegate.filterDistance * 2);
-    [self queryForAllVenuesNearLocation:appDelegate.currentLocation withNearbyDistance:appDelegate.filterDistance];
+    MKCoordinateRegion newRegion = MKCoordinateRegionMakeWithDistance(appDelegate.currentLocation.coordinate, kHSSearchDistance * 500, kHSSearchDistance * 500);
+    [self queryForAllVenuesNearLocation:appDelegate.currentLocation withNearbyDistance:kHSSearchDistance];
     
     [self.mapView setRegion:newRegion animated:YES];
     self.mapPannedSinceLocationUpdate = NO;
@@ -208,7 +208,7 @@
 		else {
 			pinView.annotation = annotation;
 		}
-		pinView.animatesDrop = [((HSVenue *)annotation) animatesDrop];
+		pinView.animatesDrop = NO;
 		pinView.canShowCallout = NO;
         
 		return pinView;
@@ -235,7 +235,7 @@
     
 	// Query for posts sort of kind of near our current location.
 	PFGeoPoint *point = [PFGeoPoint geoPointWithLatitude:currentLocation.coordinate.latitude longitude:currentLocation.coordinate.longitude];
-	[query whereKey:kHSParseLocationKey nearGeoPoint:point withinKilometers:kHSMaximumSearchDistance];
+	[query whereKey:kHSParseLocationKey nearGeoPoint:point withinKilometers:kHSSearchDistance];
 	query.limit = 5;//kHSSearch;
     
 	[query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -288,7 +288,7 @@
 				CLLocation *objectLocation = [[CLLocation alloc] initWithLatitude:newVenue.coordinate.latitude longitude:newVenue.coordinate.longitude];
 				// if this post is outside the filter distance, don't show the regular callout.
 				CLLocationDistance distanceFromCurrent = [currentLocation distanceFromLocation:objectLocation];
-				newVenue.animatesDrop = mapPinsPlaced;
+				newVenue.animatesDrop = NO;
 			}
             
 			// At this point, newAllPosts contains a new list of post objects.

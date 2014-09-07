@@ -24,6 +24,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-Goober-MobileDeepLinking-iOS.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-Goober-NSString-UrlEncode.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Goober-Parse-iOS-SDK.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -42,37 +52,47 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0063EEF04C6B40A09D071962</key>
+		<key>2ECA5B22015049CCB7D87103</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1A40D1400A5846D6BB404CD6</key>
+		<key>7725BF60E09B4BB59AE569DA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>38A1700D5F7E4D52B226C26E</key>
+		<key>9C5FE777494D40ADB625AFD2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3E0DAD3B406F4536BCB11C5F</key>
+		<key>A3A4C621C96B41C3971E8BC1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>604C05553BBB428396150EAE</key>
+		<key>A63F2EBCF1FB4552B4DFED7F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7928014E4C5E4CDA8748947F</key>
+		<key>B8B1CC12E4BE458D8D2AAC4A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D96C4E9264484EC58B89B089</key>
+		<key>C9E030E4254643F4982576F9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DB1F4AE6CCEF44F6956FBACA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F11D465BC62847959B640C6B</key>
 		<dict>
 			<key>primary</key>
 			<true/>

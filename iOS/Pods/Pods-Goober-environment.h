@@ -66,6 +66,18 @@
 #define COCOAPODS_VERSION_MINOR_MBProgressHUD 9
 #define COCOAPODS_VERSION_PATCH_MBProgressHUD 0
 
+// MobileDeepLinking-iOS
+#define COCOAPODS_POD_AVAILABLE_MobileDeepLinking_iOS
+#define COCOAPODS_VERSION_MAJOR_MobileDeepLinking_iOS 0
+#define COCOAPODS_VERSION_MINOR_MobileDeepLinking_iOS 2
+#define COCOAPODS_VERSION_PATCH_MobileDeepLinking_iOS 0
+
+// NSString-UrlEncode
+#define COCOAPODS_POD_AVAILABLE_NSString_UrlEncode
+#define COCOAPODS_VERSION_MAJOR_NSString_UrlEncode 1
+#define COCOAPODS_VERSION_MINOR_NSString_UrlEncode 1
+#define COCOAPODS_VERSION_PATCH_NSString_UrlEncode 0
+
 // Parse-iOS-SDK
 #define COCOAPODS_POD_AVAILABLE_Parse_iOS_SDK
 #define COCOAPODS_VERSION_MAJOR_Parse_iOS_SDK 1
