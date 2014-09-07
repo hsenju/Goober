@@ -11,11 +11,11 @@ window.onload = function() {
   var cfg = {
     // radius should be small ONLY if scaleRadius is true (or small radius is intended)
     "blur": 1,
-    "radius": 30,
+    "radius": .007,
     "maxOpacity": .75,
     "minOpacity": 0,
     // scales the radius based on map zoom
-    "scaleRadius": false,
+    "scaleRadius": true,
     // if set to false the heatmap uses the global maximum for colorization
     // if activated: uses the data maximum within the current map boundaries
     //   (there will always be a red spot with useLocalExtremas true)
